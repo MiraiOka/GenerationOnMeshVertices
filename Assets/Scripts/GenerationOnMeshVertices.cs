@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GenerationOnMeshVertex : MonoBehaviour
+public class GenerationOnMeshVertices : MonoBehaviour
 {
     [SerializeField] GameObject[] generationObjs;
     [SerializeField] int[] generationObjRatios;
@@ -53,7 +53,7 @@ public class GenerationOnMeshVertex : MonoBehaviour
         }
     }
 
-    void generateObj()
+    private void generateObj()
     {
         for (int i = 0; i < numOfGeneration; i++)
         {
@@ -81,15 +81,17 @@ public class GenerationOnMeshVertex : MonoBehaviour
             obj = Instantiate(generationObj, this.transform.position, Quaternion.identity);
             obj.transform.parent = this.transform;
             obj.transform.localPosition = vertices[vertex_rand_i] + transPos;
-            Vector2 vec2 = new Vector2(obj.transform.position.x - this.transform.position.x, (obj.transform.position.z - this.transform.position.z) * 20f);
-            obj.transform.localRotation = Quaternion.Euler(0, (-Mathf.Atan(vec2.y / vec2.x) * Mathf.Rad2Deg) + 90, Random.value * 360);
+
+            //回転は場合によりそうなので、以下を参考に書いてみてください。
+            //Vector3 vec3 = new Vector3(obj.transform.position.x - this.transform.position.x, obj.transform.position.y - this.transform.position.y, obj.transform.position.z - this.transform.position.z);
+            //obj.transform.localRotation = Quaternion.Euler(0, (Mathf.Atan(vec3.z / vec3.x) * Mathf.Rad2Deg)-90, 0);
+
             vertices.RemoveAt(vertex_rand_i);
 
             cntGeneration++;
             if (upperLimitOfGeneration < cntGeneration)
             {
                 isGeneration = false;
-                Debug.Log(this.gameObject.name + " is fin");
                 return;
             }
         }
@@ -99,10 +101,5 @@ public class GenerationOnMeshVertex : MonoBehaviour
     {
         generationTime = Random.Range(minGenerationTime, maxGenerationTime);
         numOfGeneration = Random.Range(minNumOfGeneration, maxNumOfGeneration);
-    }
-
-    public void init()
-    {
-
     }
 }
