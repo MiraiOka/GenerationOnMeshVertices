@@ -76,7 +76,7 @@ public class GenerationOnMeshVertices : MonoBehaviour
             int vertex_rand_i = Random.Range(0, vertices.Count);
             float transPosX = Random.Range(-transRange, transRange);
             float transPosY = Random.Range(-transRange, transRange);
-            float transPosZ = Random.Range(-transRange, 0);
+            float transPosZ = Random.Range(-transRange, transRange);
             Vector3 transPos = new Vector3(transPosX, transPosY, transPosZ);
             obj = Instantiate(generationObj, this.transform.position, Quaternion.identity);
             obj.transform.parent = this.transform;
